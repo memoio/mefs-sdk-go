@@ -25,7 +25,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/xcshuan/minio-go/pkg/s3utils"
+	"github.com/memoio/minio-go/pkg/s3utils"
 )
 
 // GetObject - returns an seekable, readable object.
@@ -602,20 +602,21 @@ func (c Client) getObject(ctx context.Context, bucketName, objectName string, op
 	if err := s3utils.CheckValidObjectName(objectName); err != nil {
 		return nil, ObjectInfo{}, nil, err
 	}
-
 	var err error
+	objectStat, err := c.statObject(ctx, bucketName, objectName, StatObjectOptions{opts})
+	if err != nil {
+		return nil, ObjectInfo{}, nil, err
+	}
 	rb := c.Request("lfs/get_object", bucketName, objectName)
 	creds, err := c.credsProvider.Get()
 	if err != nil {
 		return nil, ObjectInfo{}, nil, err
 	}
 	rb.Option("address", creds.AccessKeyID)
-	resp, err := rb.Send(context.Background())
+	resp, err := rb.Send(ctx)
 	if err != nil {
 		return nil, ObjectInfo{}, nil, err
 	}
-
-	objectStat, err := c.statObject(ctx, bucketName, objectName, StatObjectOptions{opts})
 
 	// do not close body here, caller will close
 	return resp.Output, objectStat, nil, nil

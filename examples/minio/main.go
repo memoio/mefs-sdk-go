@@ -28,14 +28,14 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/xcshuan/minio-go"
+	"github.com/memoio/minio-go"
 )
 
 func main() {
 	//预先准备好addr
-	addr := "0x39051EECB105f203fA5613deb5ee33b35a07834a"
-	fmt.Println("开始上传")
-	minioClient, err := minio.New("127.0.0.1:4608", addr, "123456", true)
+	addr := "0xD60457e090e166305D3CEE0BCF3778C689B7441d"
+	endpoint := "127.0.0.1:6711"
+	minioClient, err := minio.New(endpoint, addr, "123456", true)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -59,7 +59,8 @@ func main() {
 	p := path.Join(os.Getenv("GOPATH"), objectName)
 	fmt.Println(p, err)
 	err = minioClient.FGetObject(bucketname, objectName, p, minio.GetObjectOptions{})
-	fmt.Println(err)
+	Obinfo, err := minioClient.StatObject(bucketname, objectName, minio.StatObjectOptions{})
+	fmt.Println(Obinfo, err)
 }
 
 func fillRandom(p []byte) {

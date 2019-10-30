@@ -1,4 +1,4 @@
-module github.com/xcshuan/minio-go
+module github.com/memoio/minio-go
 
 go 1.12
 

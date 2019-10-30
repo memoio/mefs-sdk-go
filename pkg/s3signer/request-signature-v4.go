@@ -26,7 +26,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xcshuan/minio-go/pkg/s3utils"
+	"github.com/memoio/minio-go/pkg/s3utils"
 )
 
 // Signature and API related constants.

@@ -23,8 +23,9 @@ import (
 	"io"
 	"sort"
 	"strings"
+	"time"
 
-	"github.com/xcshuan/minio-go/pkg/s3utils"
+	"github.com/memoio/minio-go/pkg/s3utils"
 
 	files "github.com/ipfs/go-ipfs-files"
 )
@@ -393,14 +394,16 @@ func (c Client) putObjectDo(ctx context.Context, bucketName, objectName string, 
 	rb.Option("objectname", objectName)
 	fmt.Println(rb.args, rb.opts)
 	rb = rb.Body(fileReader)
-	if err := rb.Exec(context.Background(), &objs); err != nil {
+	if err := rb.Exec(ctx, &objs); err != nil {
 		fmt.Println(bucketName, objectName, "错误", err)
 		fmt.Println("2", rb.args, rb.opts)
 		return ObjectInfo{}, err
 	}
+	t, _ := time.Parse(SHOWTIME, objs.Objects[0].Ctime)
 	return ObjectInfo{
-		ETag: objs.Objects[0].MD5,
-		Key:  objs.Objects[0].ObjectName,
-		Size: int64(objs.Objects[0].ObjectSize),
+		ETag:         objs.Objects[0].MD5,
+		Key:          objs.Objects[0].ObjectName,
+		Size:         int64(objs.Objects[0].ObjectSize),
+		LastModified: t,
 	}, nil
 }

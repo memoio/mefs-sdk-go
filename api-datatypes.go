@@ -22,6 +22,9 @@ import (
 	"time"
 )
 
+//SHOWTIME 用于输出给使用者
+const SHOWTIME = "2006-01-02 Mon 15:04:05 MST"
+
 // BucketInfo container for bucket metadata.
 type BucketInfo struct {
 	// The name of the bucket.

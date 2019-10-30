@@ -23,7 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/xcshuan/minio-go/pkg/s3utils"
+	"github.com/memoio/minio-go/pkg/s3utils"
 )
 
 // FPutObjectWithContext - Create an object in a bucket, with contents from file at filePath. Allows request cancellation.

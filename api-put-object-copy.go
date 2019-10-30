@@ -23,7 +23,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/xcshuan/minio-go/pkg/encrypt"
+	"github.com/memoio/minio-go/pkg/encrypt"
 )
 
 // CopyObject - copy a source object into a new object

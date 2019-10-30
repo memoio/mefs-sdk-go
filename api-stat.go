@@ -20,8 +20,9 @@ package minio
 import (
 	"context"
 	"net/http"
+	"time"
 
-	"github.com/xcshuan/minio-go/pkg/s3utils"
+	"github.com/memoio/minio-go/pkg/s3utils"
 )
 
 // BucketExists verify if bucket exists and you have permission to access it.
@@ -31,26 +32,16 @@ func (c Client) BucketExists(bucketName string) (bool, error) {
 		return false, err
 	}
 
-	// Execute HEAD on bucketName.
-	resp, err := c.executeMethod(context.Background(), "HEAD", requestMetadata{
-		bucketName:       bucketName,
-		contentSHA256Hex: emptySHA256Hex,
-	})
-	defer closeResponse(resp)
+	var bks Buckets
+	rb := c.Request("lfs/head_Bucket", bucketName)
+	creds, err := c.credsProvider.Get()
 	if err != nil {
-		if ToErrorResponse(err).Code == "NoSuchBucket" {
-			return false, nil
-		}
 		return false, err
 	}
-	if resp != nil {
-		resperr := httpRespToErrorResponse(resp, bucketName, "")
-		if ToErrorResponse(resperr).Code == "NoSuchBucket" {
-			return false, nil
-		}
-		if resp.StatusCode != http.StatusOK {
-			return false, httpRespToErrorResponse(resp, bucketName, "")
-		}
+	rb.Option("address", creds.AccessKeyID)
+
+	if err := rb.Exec(context.Background(), &bks); err != nil {
+		return false, err
 	}
 	return true, nil
 }
@@ -107,7 +98,7 @@ func (c Client) statObject(ctx context.Context, bucketName, objectName string, o
 	if err := s3utils.CheckValidObjectName(objectName); err != nil {
 		return ObjectInfo{}, err
 	}
-	
+
 	rb := c.Request("lfs/head_object", bucketName, objectName)
 	creds, err := c.credsProvider.Get()
 	if err != nil {
@@ -115,12 +106,15 @@ func (c Client) statObject(ctx context.Context, bucketName, objectName string, o
 	}
 	rb.Option("address", creds.AccessKeyID)
 	var objs Objects
-	if err := rb.Exec(context.Background(), &objs); err != nil {
+	if err := rb.Exec(ctx, &objs); err != nil {
 		return ObjectInfo{}, err
 	}
+
+	t, _ := time.Parse(SHOWTIME, objs.Objects[0].Ctime)
 	return ObjectInfo{
-		ETag: objs.Objects[0].MD5,
-		Key:  objs.Objects[0].ObjectName,
-		Size: int64(objs.Objects[0].ObjectSize),
+		ETag:         objs.Objects[0].MD5,
+		Key:          objs.Objects[0].ObjectName,
+		Size:         int64(objs.Objects[0].ObjectSize),
+		LastModified: t,
 	}, nil
 }

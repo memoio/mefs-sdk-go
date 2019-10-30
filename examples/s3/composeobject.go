@@ -22,8 +22,8 @@ package main
 import (
 	"log"
 
-	minio "github.com/xcshuan/minio-go"
-	"github.com/xcshuan/minio-go/pkg/encrypt"
+	minio "github.com/memoio/minio-go"
+	"github.com/memoio/minio-go/pkg/encrypt"
 )
 
 func main() {

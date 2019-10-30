@@ -27,8 +27,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/xcshuan/minio-go/pkg/credentials"
-	"github.com/xcshuan/minio-go/pkg/s3signer"
+	"github.com/memoio/minio-go/pkg/credentials"
+	"github.com/memoio/minio-go/pkg/s3signer"
 )
 
 // Test validates `newBucketLocationCache`.

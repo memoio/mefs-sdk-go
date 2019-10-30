@@ -23,7 +23,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/xcshuan/minio-go/pkg/set"
+	"github.com/memoio/minio-go/pkg/set"
 )
 
 // BucketPolicy - Bucket level policy.

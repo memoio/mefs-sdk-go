@@ -25,7 +25,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/xcshuan/minio-go/pkg/s3utils"
+	"github.com/memoio/minio-go/pkg/s3utils"
 )
 
 // GetBucketNotification - get bucket notification at a given path.

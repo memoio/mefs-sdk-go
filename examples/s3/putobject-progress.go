@@ -23,7 +23,7 @@ import (
 	"log"
 
 	"github.com/cheggaaa/pb"
-	"github.com/xcshuan/minio-go"
+	"github.com/memoio/minio-go"
 )
 
 func main() {

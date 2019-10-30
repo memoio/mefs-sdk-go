@@ -24,8 +24,9 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
-	"github.com/xcshuan/minio-go/pkg/s3utils"
+	"github.com/memoio/minio-go/pkg/s3utils"
 )
 
 // ListBuckets list all buckets owned by this authenticated user.
@@ -39,23 +40,18 @@ import (
 //   }
 //
 func (c Client) ListBuckets() ([]BucketInfo, error) {
-	// Execute GET on service.
-	resp, err := c.executeMethod(context.Background(), "GET", requestMetadata{contentSHA256Hex: emptySHA256Hex})
-	defer closeResponse(resp)
-	if err != nil {
+	var bks Buckets
+	rb := c.Request("lfs/list_buckets")
+
+	if err := rb.Exec(context.Background(), &bks); err != nil {
 		return nil, err
 	}
-	if resp != nil {
-		if resp.StatusCode != http.StatusOK {
-			return nil, httpRespToErrorResponse(resp, "", "")
-		}
+	res := make([]BucketInfo, 0, len(bks.Buckets))
+	for _, v := range bks.Buckets {
+		t, _ := time.Parse(SHOWTIME, v.Ctime)
+		res = append(res, BucketInfo{Name: v.BucketName, CreationDate: t})
 	}
-	listAllMyBucketsResult := listAllMyBucketsResult{}
-	err = xmlDecoder(resp.Body, &listAllMyBucketsResult)
-	if err != nil {
-		return nil, err
-	}
-	return listAllMyBucketsResult.Buckets.Bucket, nil
+	return res, nil
 }
 
 /// Bucket Read Operations.
@@ -386,75 +382,30 @@ func (c Client) listObjectsQuery(bucketName, objectPrefix, objectMarker, delimit
 	if err := s3utils.CheckValidObjectNamePrefix(objectPrefix); err != nil {
 		return ListBucketResult{}, err
 	}
-	// Get resources properly escaped and lined up before
-	// using them in http request.
-	urlValues := make(url.Values)
-
-	// Set object prefix, prefix value to be set to empty is okay.
-	urlValues.Set("prefix", objectPrefix)
-
-	// Set delimiter, delimiter value to be set to empty is okay.
-	urlValues.Set("delimiter", delimiter)
-
-	// Set object marker.
-	if objectMarker != "" {
-		urlValues.Set("marker", objectMarker)
-	}
 
 	// maxkeys should default to 1000 or less.
 	if maxkeys == 0 || maxkeys > 1000 {
 		maxkeys = 1000
 	}
-	// Set max keys.
-	urlValues.Set("max-keys", fmt.Sprintf("%d", maxkeys))
-
-	// Always set encoding-type
-	urlValues.Set("encoding-type", "url")
-
-	// Execute GET on bucket to list objects.
-	resp, err := c.executeMethod(context.Background(), "GET", requestMetadata{
-		bucketName:       bucketName,
-		queryValues:      urlValues,
-		contentSHA256Hex: emptySHA256Hex,
-	})
-	defer closeResponse(resp)
+	var objs Objects
+	rb := c.Request("lfs/list_objects", bucketName)
+	creds, err := c.credsProvider.Get()
 	if err != nil {
 		return ListBucketResult{}, err
 	}
-	if resp != nil {
-		if resp.StatusCode != http.StatusOK {
-			return ListBucketResult{}, httpRespToErrorResponse(resp, bucketName, "")
-		}
+	rb.Option("address", creds.AccessKeyID)
+	rb.Option("prefix", objectPrefix)
+	if err := rb.Exec(context.Background(), &objs); err != nil {
+		return ListBucketResult{}, err
 	}
-	// Decode listBuckets XML.
-	listBucketResult := ListBucketResult{}
-	err = xmlDecoder(resp.Body, &listBucketResult)
-	if err != nil {
-		return listBucketResult, err
+	var res ListBucketResult
+	res.IsTruncated = false
+	res.Contents = make([]ObjectInfo, 0, len(objs.Objects))
+	for _, v := range objs.Objects {
+		t, _ := time.Parse(SHOWTIME, v.Ctime)
+		res.Contents = append(res.Contents, ObjectInfo{ETag: v.MD5, Key: v.ObjectName, Size: int64(v.ObjectSize), LastModified: t})
 	}
-
-	for i, obj := range listBucketResult.Contents {
-		listBucketResult.Contents[i].Key, err = url.QueryUnescape(obj.Key)
-		if err != nil {
-			return listBucketResult, err
-		}
-	}
-
-	for i, obj := range listBucketResult.CommonPrefixes {
-		listBucketResult.CommonPrefixes[i].Prefix, err = url.QueryUnescape(obj.Prefix)
-		if err != nil {
-			return listBucketResult, err
-		}
-	}
-
-	if listBucketResult.NextMarker != "" {
-		listBucketResult.NextMarker, err = url.QueryUnescape(listBucketResult.NextMarker)
-		if err != nil {
-			return listBucketResult, err
-		}
-	}
-
-	return listBucketResult, nil
+	return res, nil
 }
 
 // ListIncompleteUploads - List incompletely uploaded multipart objects.
