@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"fmt"
 	"net/http"
 	"time"
 
-	"github.com/memoio/minio-go/pkg/encrypt"
+	"github.com/memoio/mefs-sdk-go/pkg/encrypt"
 )
 
 // GetObjectOptions are used to specify additional headers or options

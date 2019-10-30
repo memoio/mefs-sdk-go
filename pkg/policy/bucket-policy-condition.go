@@ -17,7 +17,7 @@
 
 package policy
 
-import "github.com/memoio/minio-go/pkg/set"
+import "github.com/memoio/mefs-sdk-go/pkg/set"
 
 // ConditionKeyMap - map of policy condition key and value.
 type ConditionKeyMap map[string]set.StringSet

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"context"
@@ -23,7 +23,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // GetBucketPolicy - get bucket policy at a given path.

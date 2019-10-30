@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"net/url"
 	"testing"
 
-	"github.com/memoio/minio-go/pkg/credentials"
-	"github.com/memoio/minio-go/pkg/policy"
+	"github.com/memoio/mefs-sdk-go/pkg/credentials"
+	"github.com/memoio/mefs-sdk-go/pkg/policy"
 )
 
 // Tests valid hosts for location.

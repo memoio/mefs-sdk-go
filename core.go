@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"context"
@@ -23,7 +23,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/memoio/minio-go/pkg/encrypt"
+	"github.com/memoio/mefs-sdk-go/pkg/encrypt"
 )
 
 // Core - Inherits Client and adds new methods to expose the low level S3 APIs.

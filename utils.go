@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"crypto/md5"
@@ -33,7 +33,7 @@ import (
 
 	"github.com/minio/sha256-simd"
 
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // xmlDecoder provide decoded value in xml.

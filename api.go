@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"bytes"
@@ -32,8 +32,8 @@ import (
 
 	"github.com/minio/sha256-simd"
 
-	"github.com/memoio/minio-go/pkg/credentials"
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/credentials"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 
 	"context"
 	"errors"

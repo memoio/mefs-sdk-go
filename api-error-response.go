@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"encoding/xml"
@@ -60,7 +60,7 @@ type ErrorResponse struct {
 //
 // For example:
 //
-//   import s3 "github.com/memoio/minio-go"
+//   import s3 "github.com/memoio/mefs-sdk-go"
 //   ...
 //   ...
 //   reader, stat, err := s3.GetObject(...)
@@ -92,7 +92,7 @@ func (e ErrorResponse) Error() string {
 // Common string for errors to report issue location in unexpected
 // cases.
 const (
-	reportIssue = "Please report this issue at https://github.com/memoio/minio-go/issues."
+	reportIssue = "Please report this issue at https://github.com/memoio/mefs-sdk-go/issues."
 )
 
 // httpRespToErrorResponse returns a new encoded ErrorResponse

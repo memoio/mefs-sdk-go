@@ -3,8 +3,8 @@ package main
 // +build ignore
 
 /*
- * MinIO Go Library for Amazon S3 Compatible Cloud Storage
- * Copyright 2015-2017 MinIO, Inc.
+ * mefs Go Library for Amazon S3 Compatible Cloud Storage
+ * Copyright 2015-2017 mefs, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,14 +28,14 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/memoio/minio-go"
+	"github.com/memoio/mefs-sdk-go"
 )
 
 func main() {
 	//预先准备好addr
 	addr := "0xD60457e090e166305D3CEE0BCF3778C689B7441d"
 	endpoint := "127.0.0.1:6711"
-	minioClient, err := minio.New(endpoint, addr, "123456", true)
+	mefsClient, err := mefs.New(endpoint, addr, "123456", true)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -43,7 +43,7 @@ func main() {
 	fmt.Println("连接成功")
 
 	bucketname := "bucket01"
-	err = minioClient.MakeBucket(bucketname, "")
+	err = mefsClient.MakeBucket(bucketname, "")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -55,11 +55,11 @@ func main() {
 	buf := bytes.NewBuffer(data)
 	objectName := addr + "_" + strconv.Itoa(int(r))
 	fmt.Println("  Begin to upload the ", objectName, "Size is", toStorageSize(r), "addr", addr)
-	_, err = minioClient.PutObject(bucketname, objectName, buf, r, minio.PutObjectOptions{})
+	_, err = mefsClient.PutObject(bucketname, objectName, buf, r, mefs.PutObjectOptions{})
 	p := path.Join(os.Getenv("GOPATH"), objectName)
 	fmt.Println(p, err)
-	err = minioClient.FGetObject(bucketname, objectName, p, minio.GetObjectOptions{})
-	Obinfo, err := minioClient.StatObject(bucketname, objectName, minio.StatObjectOptions{})
+	err = mefsClient.FGetObject(bucketname, objectName, p, mefs.GetObjectOptions{})
+	Obinfo, err := mefsClient.StatObject(bucketname, objectName, mefs.StatObjectOptions{})
 	fmt.Println(Obinfo, err)
 }
 

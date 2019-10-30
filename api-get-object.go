@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"context"
@@ -25,7 +25,7 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // GetObject - returns an seekable, readable object.

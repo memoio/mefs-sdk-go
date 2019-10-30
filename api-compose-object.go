@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"context"
@@ -28,8 +28,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/memoio/minio-go/pkg/encrypt"
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/encrypt"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // DestinationInfo - type with information about the object to be

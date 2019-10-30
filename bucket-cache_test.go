@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"bytes"
@@ -27,8 +27,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/memoio/minio-go/pkg/credentials"
-	"github.com/memoio/minio-go/pkg/s3signer"
+	"github.com/memoio/mefs-sdk-go/pkg/credentials"
+	"github.com/memoio/mefs-sdk-go/pkg/s3signer"
 )
 
 // Test validates `newBucketLocationCache`.

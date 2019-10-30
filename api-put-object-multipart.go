@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"bytes"
@@ -33,8 +33,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/memoio/minio-go/pkg/encrypt"
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/encrypt"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 func (c Client) putObjectMultipart(ctx context.Context, bucketName, objectName string, reader io.Reader, size int64,

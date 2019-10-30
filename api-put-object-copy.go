@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"context"
@@ -23,7 +23,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/memoio/minio-go/pkg/encrypt"
+	"github.com/memoio/mefs-sdk-go/pkg/encrypt"
 )
 
 // CopyObject - copy a source object into a new object

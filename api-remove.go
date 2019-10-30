@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"bytes"
@@ -25,7 +25,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // RemoveBucket deletes the bucket name.

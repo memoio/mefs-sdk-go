@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"context"
 	"net/http"
 	"time"
 
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // BucketExists verify if bucket exists and you have permission to access it.

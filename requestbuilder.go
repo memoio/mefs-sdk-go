@@ -1,4 +1,4 @@
-package minio
+package mefs
 
 import (
 	"bytes"

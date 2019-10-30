@@ -23,7 +23,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/memoio/minio-go/pkg/set"
+	"github.com/memoio/mefs-sdk-go/pkg/set"
 )
 
 // TestUnmarshalBucketPolicy tests unmarsheling various examples

@@ -1,4 +1,4 @@
-module github.com/memoio/minio-go
+module github.com/memoio/mefs-sdk-go
 
 go 1.12
 

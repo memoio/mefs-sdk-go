@@ -21,7 +21,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/memoio/minio-go/pkg/set"
+	"github.com/memoio/mefs-sdk-go/pkg/set"
 )
 
 // ConditionKeyMap.Add() is called and the result is validated.

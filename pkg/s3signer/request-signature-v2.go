@@ -30,7 +30,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // Signature and API related constants.

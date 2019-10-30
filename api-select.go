@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package minio
+package mefs
 
 import (
 	"bytes"
@@ -31,8 +31,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/memoio/minio-go/pkg/encrypt"
-	"github.com/memoio/minio-go/pkg/s3utils"
+	"github.com/memoio/mefs-sdk-go/pkg/encrypt"
+	"github.com/memoio/mefs-sdk-go/pkg/s3utils"
 )
 
 // CSVFileHeaderInfo - is the parameter for whether to utilize headers.

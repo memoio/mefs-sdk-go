@@ -42,8 +42,8 @@ import (
 	humanize "github.com/dustin/go-humanize"
 	log "github.com/sirupsen/logrus"
 
-	"github.com/memoio/minio-go"
-	"github.com/memoio/minio-go/pkg/encrypt"
+	"github.com/memoio/mefs-sdk-go"
+	"github.com/memoio/mefs-sdk-go/pkg/encrypt"
 )
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyz01234569"
@@ -2226,7 +2226,7 @@ func testGetObjectReadAtFunctional() {
 	successLogger(testName, function, args, startTime).Info()
 }
 
-// Reproduces issue https://github.com/memoio/minio-go/issues/1137
+// Reproduces issue https://github.com/memoio/mefs-sdk-go/issues/1137
 func testGetObjectReadAtWhenEOFWasReached() {
 	// initialize logging params
 	startTime := time.Now()
